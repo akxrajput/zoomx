@@ -68,7 +68,7 @@ export default function SignupPage() {
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
-        </div>
+        </div> 
 
         {/* Button */}
         <button
