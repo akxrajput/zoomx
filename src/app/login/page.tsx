@@ -5,14 +5,35 @@ import { useRouter } from "next/navigation";
 
 
 export default function LoginPage() {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+   const router = useRouter();
+  const [user, setUser] = useState({ email: "", password: "" });
 
-  const handleLogin= async () =>{
+  const handleLogin = async () => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+        }),
+      });
 
-  }
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("✅ Login successful:", data);
+        // Redirect to profile page with userId from API response
+        router.push(`/profile/${data.name}`);
+      } else {
+        console.error("❌ Login failed:", data.message);
+      }
+    } catch (error) {
+      console.error("⚠️ Error during login:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">

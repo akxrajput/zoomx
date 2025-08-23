@@ -8,12 +8,36 @@ export default function SignupPage() {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    username: "",
+    name: "",
   });
 
-  const handleSignup= async () =>{
+  const handleSignup = async () => {
+  try {
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: user.name,      // from your input state
+        email: user.email,    // from your input state
+        password: user.password, // from your input state
+      }),
+    });
 
+    const data = await res.json();
+
+    if (res.ok) {
+      console.log("✅ Signup successful:", data);
+      // Optionally redirect or show success message
+    } else {
+      console.error("❌ Signup failed:", data.message);
+    }
+  } catch (error) {
+    console.error("⚠️ Error during signup:", error);
   }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
@@ -27,7 +51,7 @@ export default function SignupPage() {
 
         {/* Username */}
         <div className="w-full mb-6">
-          <label htmlFor="username" className="block mb-2 text-gray-300 text-sm">
+          <label htmlFor="name" className="block mb-2 text-gray-300 text-sm">
             Username
           </label>
           <input
@@ -35,8 +59,8 @@ export default function SignupPage() {
             placeholder="Enter username"
             type="text"
             id="username"
-            value={user.username}
-            onChange={(e) => setUser({ ...user, username: e.target.value })}
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
           />
         </div>
 

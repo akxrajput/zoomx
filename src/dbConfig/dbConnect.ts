@@ -1,12 +1,24 @@
 import mongoose from "mongoose";
-import { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
 
-export default function dbConnect(){
+let isConnected = false;
+
+
+export default async function dbConnect(){
+
+    if(isConnected){
+        console.log("DB is already connected")
+        return;
+    }
+
+    if(!process.env.MONGO_URL){
+        throw new Error("URL is not available please check .env")
+    }
+
 
   try {
-    const conn = mongoose.connect(process.env.MONGO_URL!);
-    NextResponse.json("db connected successfully!!")
+    const conn = await mongoose.connect(process.env.MONGO_URL!);
+    isConnected = true;
+    console.log("DB connetcted successfully !!")
     
   } catch (error) {
     throw new Error("error in connecting the database")

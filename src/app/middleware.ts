@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
-  const protectedRoutes = ["/dashboard", "/meeting"];
+  const protectedRoutes = ["/profile", "/meeting"];
 
   if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
     if (!token) {
@@ -18,13 +18,15 @@ export function middleware(req: NextRequest) {
     try {
       jwt.verify(token, process.env.JWT_SECRET!);
 
-      return NextResponse.next();
+      return NextResponse.redirect(new URL("/profile" , req.url));
     } catch (error) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/meeting/:path*"],
+  matcher: ["/profile/:path*", "/meeting/:path*"],
 };
