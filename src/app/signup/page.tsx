@@ -38,7 +38,7 @@ export default function SignupPage() {
   }
 };
 
-
+    
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       <div className="bg-gray-900 bg-opacity-90 rounded-2xl shadow-2xl p-10 w-[400px] flex flex-col items-center border border-gray-700 hover:border-purple-500 transition duration-300">

@@ -83,7 +83,7 @@ export default function LoginPage() {
          onClick={handleLogin}
           className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-lg font-semibold transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/50"
         >
-          Sign Up
+         Login
         </button>
 
         {/* Link */}

@@ -4,18 +4,18 @@ import bcrypt from "bcryptjs";
 import User from "@/models/User";
 
 
-export  async function POST(req : Request){
+export async function POST(req : Request){
     try {
         const {name, email, password} = await req.json();
     
         if(!name || !email || !password){
             return NextResponse.json({message : "every field is required"}, {status : 400})
         }
-    
+        
         await dbConnect();
-    
+        
         const existing = await User.findOne({email});
-    
+       
         if(existing){
             return NextResponse.json({message : "Email is currently is in used"}, {status:409})
         }
